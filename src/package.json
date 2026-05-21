@@ -2,5 +2,9 @@
   "name": "tesi-sistema-nutricao",
   "version": "1.0.0",
   "type": "module",
-  "description": "Sistema de Monitoramento de Saúde e Nutrição"
+  "description": "Sistema de Monitoramento de Saúde e Nutrição",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mongoose": "^9.6.2"
+  }
 }
