@@ -1,27 +1,30 @@
+import { RegistroSaude } from "./RegistroSaude.js";
+
 export class DiarioSaude {
   constructor(usuario) {
-    this.usuario = usuario;
-    this.registros = []; // Lista<RegistroSaude>
+    this.usuario = usuario; 
   }
 
-  adicionarRegistro(registro) {
-    this.registros.push(registro);
+  async adicionarRegistro(registro) {
+    registro.usuario = this.usuario._id || this.usuario;
+    return await registro.save();
   }
 
-  atualizarRegistro(id, novosDados) {
-    const index = this.registros.findIndex(r => r.id === id);
-    if (index !== -1) this.registros[index] = { ...this.registros[index], ...novosDados };
+  async atualizarRegistro(id, novosDados) {
+    return await RegistroSaude.findByIdAndUpdate(id, novosDados, { new: true });
+  }
+  async excluirRegistro(id) {
+    return await RegistroSaude.findByIdAndDelete(id);
   }
 
-  excluirRegistro(id) {
-    this.registros = this.registros.filter(r => r.id !== id);
+  async listarRegistros() {
+    return await RegistroSaude.find({ usuario: this.usuario._id || this.usuario });
   }
 
-  listarRegistros() {
-    return this.registros;
-  }
-
-  buscarPorData(data) {
-    return this.registros.find(r => r.data === data);
+  async buscarPorData(data) {
+    return await RegistroSaude.find({
+      usuario: this.usuario._id || this.usuario,
+      data: data
+    });
   }
 }

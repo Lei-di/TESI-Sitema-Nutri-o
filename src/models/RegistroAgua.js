@@ -1,12 +1,15 @@
-import { RegistroSaude } from './RegistroSaude.js';
+import mongoose from "mongoose";
+import { RegistroSaude } from "./RegistroSaude.js";
 
-export class RegistroAgua extends RegistroSaude {
-  constructor(id, data, observacoes, quantidadeLitros) {
-    super(id, data, observacoes);
-    this.quantidadeLitros = quantidadeLitros;
+const registroAguaSchema = new mongoose.Schema({
+  quantidadeLitros: {
+    type: Number,
+    required: true
   }
+});
 
-  validarQuantidade() {
-    return this.quantidadeLitros > 0;
-  }
-}
+registroAguaSchema.methods.validarQuantidade = function() {
+  return this.quantidadeLitros > 0;
+};
+
+export const RegistroAgua = RegistroSaude.discriminator("Agua", registroAguaSchema);

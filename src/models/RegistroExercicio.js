@@ -1,14 +1,23 @@
-import { RegistroSaude } from './RegistroSaude.js';
+import mongoose from "mongoose";
+import { RegistroSaude } from "./RegistroSaude.js";
 
-export class RegistroExercicio extends RegistroSaude {
-  constructor(id, data, observacoes, tipoExercicio, duracao, calorias) {
-    super(id, data, observacoes);
-    this.tipoExercicio = tipoExercicio;
-    this.duracao = duracao;
-    this.calorias = calorias;
+const registroExercicioSchema = new mongoose.Schema({
+  tipoExercicio: {
+    type: String,
+    required: true
+  },
+  duracao: {
+    type: Number,
+    required: true
+  },
+  calorias: {
+    type: Number,
+    required: true
   }
+});
 
-  calcularCalorias() {
-    return this.calorias;
-  }
-} 
+registroExercicioSchema.methods.calcularCalorias = function() {
+  return this.calorias;
+};
+
+export const RegistroExercicio = RegistroSaude.discriminator("Exercicio", registroExercicioSchema);

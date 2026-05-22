@@ -1,11 +1,23 @@
-export class RegistroSaude {
-  constructor(id, data, observacoes) {
-    this.id = id;
-    this.data = data;
-    this.observacoes = observacoes;
-  }
+import mongoose from "mongoose";
 
-  salvar() { console.log("Registro salvo."); }
-  editar() { console.log("Registro editado."); }
-  remover() { console.log("Registro removido."); }
-}
+const registroSaudeOptions = {
+  discriminatorKey: "tipo", 
+  timestamps: true
+};
+
+const registroSaudeSchema = new mongoose.Schema({
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Usuario",
+    required: true
+  },
+  data: {
+    type: String,
+    required: true
+  },
+  observacoes: {
+    type: String
+  }
+}, registroSaudeOptions);
+
+export const RegistroSaude = mongoose.model("RegistroSaude", registroSaudeSchema);

@@ -1,20 +1,20 @@
-export class Usuario {
-  constructor(id_usuario, nome, email, telefone) {
-    this.id_usuario = id_usuario;
-    this.nome = nome;
-    this.email = email;
-    this.telefone = telefone;
-  }
+import mongoose from "mongoose";
 
-  login() {
-    console.log(`Usuário ${this.nome} logado.`);
+const usuarioSchema = new mongoose.Schema({
+  nome: { 
+    type: String, 
+    required: true 
+  },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  telefone: { 
+    type: String 
   }
+}, { 
+  timestamps: true
+});
 
-  logout() {
-    console.log(`Usuário ${this.nome} deslogado.`);
-  }
-
-  atualizarPerfil() {
-    console.log("Perfil de usuário atualizado.");
-  }
-}
+export const Usuario = mongoose.model("Usuario", usuarioSchema);

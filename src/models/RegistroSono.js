@@ -1,13 +1,19 @@
-import { RegistroSaude } from './RegistroSaude.js';
+import mongoose from "mongoose";
+import { RegistroSaude } from "./RegistroSaude.js";
 
-export class RegistroSono extends RegistroSaude {
-  constructor(id, data, observacoes, horasDormidas, qualidadeSono) {
-    super(id, data, observacoes);
-    this.horasDormidas = horasDormidas;
-    this.qualidadeSono = qualidadeSono;
+const registroSonoSchema = new mongoose.Schema({
+  horasDormidas: {
+    type: Number,
+    required: true
+  },
+  qualidadeSono: {
+    type: String,
+    required: true
   }
+});
 
-  validarHoras() {
-    return this.horasDormidas >= 0 && this.horasDormidas <= 24;
-  }
-} 
+registroSonoSchema.methods.validarHoras = function() {
+  return this.horasDormidas >= 0 && this.horasDormidas <= 24;
+};
+
+export const RegistroSono = RegistroSaude.discriminator("Sono", registroSonoSchema);
