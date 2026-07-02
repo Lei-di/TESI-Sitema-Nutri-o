@@ -1,18 +1,18 @@
-import { Usuario } from "../models/Usuario.js";
+import  Usuario  from "../models/Usuario.js";
 
-// CREATE - Criar Utilizador
 export const criarUsuario = async (req, res) => {
     try {
-        const { nome, email, telefone } = req.body;
-        const novoUsuario = new Usuario({ nome, email, telefone });
+        const { nome, email, telefone, senha } = req.body;
+
+        const novoUsuario = new Usuario({ nome, email, telefone, senha });
         await novoUsuario.save();
-        return res.status(201).json(novoUsuario); 
+
+        return res.status(201).json(novoUsuario);
     } catch (error) {
-        return res.status(400).json({ erro: error.message });
+        return res.status(500).json({ erro: error.message });
     }
 };
 
-// READ - Listar Todos
 export const listarUsuarios = async (req, res) => {
     try {
         const usuarios = await Usuario.find();
@@ -22,7 +22,6 @@ export const listarUsuarios = async (req, res) => {
     }
 };
 
-// READ - Buscar por ID
 export const buscarUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -36,7 +35,6 @@ export const buscarUsuarioPorId = async (req, res) => {
     }
 };
 
-// UPDATE - Atualizar dados
 export const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
@@ -55,7 +53,6 @@ export const atualizarUsuario = async (req, res) => {
     }
 };
 
-// DELETE - Remover Utilizador
 export const deletarUsuario = async (req, res) => {
     try {
         const { id } = req.params;

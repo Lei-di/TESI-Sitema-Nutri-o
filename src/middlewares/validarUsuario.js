@@ -16,6 +16,11 @@ const usuarioSchema = Joi.object({
         'string.min': 'O telefone deve ter pelo menos 10 dígitos (com DDD).',
         'string.max': 'O telefone deve ter no máximo 11 dígitos.',
         'any.required': 'O campo telefone é obrigatório.'
+    }),
+    senha: Joi.string().min(6).required().messages({
+    'string.empty': 'O campo senha não pode estar vazio.',
+    'string.min': 'A senha deve ter no mínimo 6 caracteres.',
+    'any.required': 'O campo senha é obrigatório.'
     })
 });
 

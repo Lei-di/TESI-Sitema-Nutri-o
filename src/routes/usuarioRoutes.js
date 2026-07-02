@@ -5,7 +5,6 @@ import validarUsuario from "../middlewares/validarUsuario.js";
 const router = Router();
 
 router.post("/", validarUsuario, criarUsuario);
-
 router.get("/", listarUsuarios);
 router.get("/:id", buscarUsuarioPorId);
 router.put("/:id", atualizarUsuario);
