@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { criarUsuario, listarUsuarios, buscarUsuarioPorId, atualizarUsuario, deletarUsuario } from "../controllers/UsuarioController.js";
+import validarUsuario from "../middlewares/validarUsuario.js"; 
 
 const router = Router();
 
-router.post("/", criarUsuario);
+router.post("/", validarUsuario, criarUsuario);
+
 router.get("/", listarUsuarios);
 router.get("/:id", buscarUsuarioPorId);
 router.put("/:id", atualizarUsuario);
