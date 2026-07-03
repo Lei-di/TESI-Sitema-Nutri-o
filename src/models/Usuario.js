@@ -8,26 +8,29 @@ const usuarioSchema = new mongoose.Schema({
     senha: { type: String, required: true }
 });
 
-
-usuarioSchema.pre('save', function (next) {
+usuarioSchema.pre('save', async function () {
     const usuario = this;
     console.log('>>> Hook pre-save foi chamado');
 
+    // Se a senha não foi modificada, encerra a função sem fazer nada
     if (!usuario.isModified('senha')) {
-        return next();
+        return; 
     }
 
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) return next(err);
+    try {
+        // Gera o salt e o hash de forma assíncrona (sem callbacks)
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(usuario.senha, salt);
+        
+        console.log('>>> Hash gerado:', hash);
 
-        bcrypt.hash(usuario.senha, salt, function (err, hash) {
-            if (err) return next(err);
-            console.log('>>> Hash gerado:', hash);
-
-            usuario.senha = hash;
-            next();
-        });
-    });
+        // Atribui a senha criptografada ao usuário
+        usuario.senha = hash;
+        
+    } catch (err) {
+        // Em caso de erro na criptografia, repassa para o Mongoose tratar
+        throw err;
+    }
 });
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);
