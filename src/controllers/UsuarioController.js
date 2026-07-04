@@ -9,6 +9,9 @@ export const criarUsuario = async (req, res) => {
 
         return res.status(201).json(novoUsuario);
     } catch (error) {
+        if (error.code === 11000) {
+            return res.status(409).json({ erro: "Este e-mail já está cadastrado." });
+        }
         return res.status(500).json({ erro: error.message });
     }
 };
@@ -49,6 +52,9 @@ export const atualizarUsuario = async (req, res) => {
         }
         return res.status(200).json(usuarioAtualizado);
     } catch (error) {
+        if (error.code === 11000) {
+            return res.status(409).json({ erro: "Este e-mail já está cadastrado." });
+        }
         return res.status(400).json({ erro: error.message });
     }
 };
