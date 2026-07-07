@@ -1,0 +1,52 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: testes
+meta:
+  id: wrk_39be4603c7f94fd1b6edf709a9b43013
+  created: 1783090564768
+  modified: 1783090564768
+  description: ""
+collection:
+  - url: " http://localhost:3000/auth/login"
+    name: New Request
+    meta:
+      id: req_17650ad1cc804bf681be23b8b641acd9
+      created: 1783090570642
+      modified: 1783130849310
+      isPrivate: false
+      description: ""
+      sortKey: -1783090570642
+    method: POST
+    body:
+      mimeType: application/json
+      text: >+
+        {
+             "email": "jotape.teste@gmail.com",
+             "senha": "$2b$10$/ws4u4.K/wlvKZRLKvtxxegMpKACj.WN14FrY.kXQKRW2ELS2Udsu"
+           }
+
+
+    headers:
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_0db6c38f7d6b4cdbb1e2293f7b0e807f8cb11a25
+    created: 1783090564772
+    modified: 1783090564772
+environments:
+  name: Base Environment
+  meta:
+    id: env_0db6c38f7d6b4cdbb1e2293f7b0e807f8cb11a25
+    created: 1783090564770
+    modified: 1783090564770
+    isPrivate: false
