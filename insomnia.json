@@ -1,52 +1,513 @@
 type: collection.insomnia.rest/5.0
 schema_version: "5.1"
-name: testes
+name: TESI - Sistema Nutrição
 meta:
-  id: wrk_39be4603c7f94fd1b6edf709a9b43013
+  id: wrk_06dd9cf19bff71f8b99b6eacd0dcc51c
   created: 1783090564768
-  modified: 1783090564768
-  description: ""
+  modified: 1783130849310
+  description: Coleção de requisições da API do Sistema de Nutrição (TESI)
 collection:
-  - url: " http://localhost:3000/auth/login"
-    name: New Request
+  - name: Usuários
     meta:
-      id: req_17650ad1cc804bf681be23b8b641acd9
-      created: 1783090570642
-      modified: 1783130849310
-      isPrivate: false
+      id: fld_43882dc5de726560472fd2fdbbc7a5a2
+      created: 1783090565000
+      modified: 1783090565000
       description: ""
-      sortKey: -1783090570642
-    method: POST
-    body:
-      mimeType: application/json
-      text: >+
-        {
-             "email": "jotape.teste@gmail.com",
-             "senha": "$2b$10$/ws4u4.K/wlvKZRLKvtxxegMpKACj.WN14FrY.kXQKRW2ELS2Udsu"
-           }
-
-
-    headers:
-      - name: Content-Type
-        value: application/json
-    settings:
-      renderRequestBody: true
-      encodeUrl: true
-      followRedirects: global
-      cookies:
-        send: true
-        store: true
-      rebuildPath: true
+      sortKey: -1783090565000
+    children:
+      - url: "{{ _.base_url }}/usuarios"
+        name: Criar Usuário
+        meta:
+          id: req_3fefd421e533743d92209235f02f9842
+          created: 1779471324795
+          modified: 1779471424197
+          isPrivate: false
+          description: ""
+          sortKey: -1783090565100
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Gabriela Nutri",
+              "email": "gabriela@gmail.com",
+              "telefone": "67999999999",
+              "senha": "senha123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios"
+        name: Listar Usuários
+        meta:
+          id: req_73c2aa4deec0f5ec0fd9eb67d6af3993
+          created: 1783090565200
+          modified: 1783090565200
+          isPrivate: false
+          description: ""
+          sortKey: -1783090565200
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios/{{ _.usuarioId }}"
+        name: Buscar Usuário por ID
+        meta:
+          id: req_14a33c2ad073d4acf7d49cb92e7ffef7
+          created: 1783090565300
+          modified: 1783090565300
+          isPrivate: false
+          description: ""
+          sortKey: -1783090565300
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios/{{ _.usuarioId }}"
+        name: Atualizar Usuário
+        meta:
+          id: req_e9356d5cfc6a297898966629a11e5f2c
+          created: 1783090565400
+          modified: 1783090565400
+          isPrivate: false
+          description: ""
+          sortKey: -1783090565400
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Gabriela Nutri Atualizada",
+              "email": "gabriela@gmail.com",
+              "telefone": "67988888888"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios/{{ _.usuarioId }}"
+        name: Deletar Usuário
+        meta:
+          id: req_4a4e8fd91b34180816d84458ba3ace97
+          created: 1783090565500
+          modified: 1783090565500
+          isPrivate: false
+          description: ""
+          sortKey: -1783090565500
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.6.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_9ff259f4a8806467a97eec0fab3636f0
+      created: 1783090566000
+      modified: 1783090566000
+      description: ""
+      sortKey: -1783090566000
+    children:
+      - url: "{{ _.base_url }}/auth/login"
+        name: Login
+        meta:
+          id: req_4dd251e6f1da83525c6526bcdcfad36e
+          created: 1783090570642
+          modified: 1783130849310
+          isPrivate: false
+          description: ""
+          sortKey: -1783090570642
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "gabriela@gmail.com",
+              "senha": "senha123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Saúde
+    meta:
+      id: fld_e5fe5c087f646f842c23f3d835d2cc2d
+      created: 1783090567000
+      modified: 1783090567000
+      description: ""
+      sortKey: -1783090567000
+    children:
+      - url: "{{ _.base_url }}/saude"
+        name: Criar Registro de Saúde - Água
+        meta:
+          id: req_2e84b8abe2a24f616c02dd8018e9a384
+          created: 1783090567100
+          modified: 1783090567100
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567100
+        method: POST
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "usuarioId": "{{ _.usuarioId }}",
+              "tipo": "agua",
+              "data": "2026-07-07",
+              "observacoes": "Bebi água ao longo do dia",
+              "quantidadeLitros": 2.5
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude"
+        name: Criar Registro de Saúde - Sono
+        meta:
+          id: req_0de75f790b93923ac65ced56b27ae0ac
+          created: 1783090567200
+          modified: 1783090567200
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567200
+        method: POST
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "usuarioId": "{{ _.usuarioId }}",
+              "tipo": "sono",
+              "data": "2026-07-07",
+              "observacoes": "Dormi bem",
+              "horasDormidas": 8,
+              "qualidadeSono": "boa"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude"
+        name: Criar Registro de Saúde - Exercício
+        meta:
+          id: req_c92056d884b96dd5eb978398cedf5b89
+          created: 1783090567300
+          modified: 1783090567300
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567300
+        method: POST
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "usuarioId": "{{ _.usuarioId }}",
+              "tipo": "exercicio",
+              "data": "2026-07-07",
+              "observacoes": "Corrida no parque",
+              "tipoExercicio": "corrida",
+              "duracao": 40,
+              "calorias": 350
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude/usuario/{{ _.usuarioId }}"
+        name: Listar Registros de Saúde por Usuário
+        meta:
+          id: req_db5109d6aa71b22938d952fb5b6bfb98
+          created: 1783090567400
+          modified: 1783090567400
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567400
+        method: GET
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude/usuario/{{ _.usuarioId }}/filtro?data=2026-07-07"
+        name: Buscar Registro de Saúde por Data
+        meta:
+          id: req_716824a26841c957e2b12105a3c5e742
+          created: 1783090567500
+          modified: 1783090567500
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567500
+        method: GET
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        parameters:
+          - name: data
+            value: "2026-07-07"
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude/{{ _.registroId }}"
+        name: Atualizar Registro de Saúde
+        meta:
+          id: req_85bce3f9bdff384caf1c88a8316c7a06
+          created: 1783090567600
+          modified: 1783090567600
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567600
+        method: PUT
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "observacoes": "Observação atualizada",
+              "quantidadeLitros": 3
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/saude/{{ _.registroId }}"
+        name: Excluir Registro de Saúde
+        meta:
+          id: req_2df399d668fc2f1a99c6f67ca7d5f251
+          created: 1783090567700
+          modified: 1783090567700
+          isPrivate: false
+          description: ""
+          sortKey: -1783090567700
+        method: DELETE
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Perfis de Saúde
+    meta:
+      id: fld_c57fbda9cce35a3f8c6e66ed5a0f3873
+      created: 1783090568000
+      modified: 1783090568000
+      description: ""
+      sortKey: -1783090568000
+    children:
+      - url: "{{ _.base_url }}/perfis"
+        name: Salvar/Atualizar Perfil de Saúde
+        meta:
+          id: req_ed16b690b924545bcffa8935d5acffa7
+          created: 1783090568100
+          modified: 1783090568100
+          isPrivate: false
+          description: ""
+          sortKey: -1783090568100
+        method: POST
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "usuarioId": "{{ _.usuarioId }}",
+              "peso": 75.5,
+              "altura": 1.78,
+              "idade": 28,
+              "metaAgua": 2.5,
+              "metaExercicio": 150
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/perfis/usuario/{{ _.usuarioId }}"
+        name: Obter Perfil de Saúde
+        meta:
+          id: req_f08cc2372c2d912df1543af43c3ece9d
+          created: 1783090568200
+          modified: 1783090568200
+          isPrivate: false
+          description: ""
+          sortKey: -1783090568200
+        method: GET
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/perfis/usuario/{{ _.usuarioId }}"
+        name: Deletar Perfil de Saúde
+        meta:
+          id: req_5c89218d060c65a02b9312645d12484e
+          created: 1783090568300
+          modified: 1783090568300
+          isPrivate: false
+          description: ""
+          sortKey: -1783090568300
+        method: DELETE
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          prefix: Bearer
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_0db6c38f7d6b4cdbb1e2293f7b0e807f8cb11a25
+    id: jar_50946a24095351a2c85be50233f02d71
     created: 1783090564772
     modified: 1783090564772
 environments:
   name: Base Environment
   meta:
-    id: env_0db6c38f7d6b4cdbb1e2293f7b0e807f8cb11a25
+    id: env_5a962bc8cdddf4e2de245fd1442877de
     created: 1783090564770
-    modified: 1783090564770
+    modified: 1783130849310
     isPrivate: false
+  data:
+    base_url: http://localhost:3000
+    token: ""
+    usuarioId: ""
+    registroId: ""
