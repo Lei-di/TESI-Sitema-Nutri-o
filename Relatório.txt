@@ -1,0 +1,39 @@
+Trabalho Semestral: Desenvolvimento de Back-end
+
+Disciplina: Tópicos Especiais em Sistemas de Informação
+Professor: Jéferson Carlos de Souza 
+
+Alunas: Gabriela Rabelo de Melo, Leidineia da Cruz
+
+
+
+Proposta da Aplicação - HealthLog (Diário de Saúde)
+
+O Health Log é uma aplicação web desenvolvida com o objetivo de auxiliar usuários no monitoramento e gerenciamento de hábitos diários relacionados à saúde e ao bem-estar. 
+Atualmente, muitas pessoas enfrentam dificuldades para acompanhar de forma organizada informações importantes sobre sua rotina, como a quantidade de água consumida, as
+horas de sono, a prática de atividades físicas e outros indicadores que influenciam diretamente a qualidade de vida. A falta desse acompanhamento dificulta a identificação 
+de padrões, o cumprimento de metas pessoais e a adoção de hábitos mais saudáveis.
+
+Com o propósito de solucionar esse problema, o HealthLog disponibiliza uma plataforma intuitiva e de fácil utilização, permitindo que o usuário registre diariamente suas 
+informações de saúde de maneira prática, organizada e segura. Todos os dados cadastrados permanecem armazenados no sistema, possibilitando a consulta ao histórico de registros,
+a análise da evolução dos hábitos ao longo do tempo e o acompanhamento do progresso em relação às metas definidas pelo próprio usuário.
+
+Entre as principais funcionalidades da aplicação destacam-se o cadastro e a autenticação de usuários, o gerenciamento do perfil, a definição de metas diárias de consumo 
+de água, horas de sono e prática de exercícios físicos, além do registro diário dessas informações, incluindo observações complementares. O sistema também disponibiliza 
+operações completas de CRUD (Criar, Ler, Atualizar e Excluir registros), pesquisa e filtros por data, visualização do histórico de atividades e geração de relatórios com 
+resumos semanais e mensais, fornecendo ao usuário uma visão consolidada de sua evolução e contribuindo para a tomada de decisões voltadas à melhoria da saúde.
+
+A aplicação será desenvolvida utilizando React no front-end para a construção de uma interface moderna, dinâmica e responsiva, proporcionando uma experiência de uso intuitiva 
+em diferentes dispositivos. O back-end será implementado em Node.js com o framework Express, responsável pelo processamento das regras de negócio, autenticação de usuários 
+e gerenciamento das requisições da aplicação. A persistência dos dados será realizada em um banco de dados relacional PostgreSQL, garantindo a integridade, consistência e 
+segurança das informações armazenadas.
+
+A arquitetura do sistema seguirá o padrão MVC (Model–View–Controller), promovendo a separação das responsabilidades entre as camadas de apresentação, lógica de negócio e 
+acesso aos dados. Essa organização facilita a manutenção, escalabilidade e reutilização do código, além de tornar o desenvolvimento mais estruturado e alinhado às boas práticas 
+de engenharia de software.
+
+Dessa forma, o HealthLog constitui uma solução tecnológica completa para o acompanhamento da saúde e do bem-estar, incentivando a adoção de hábitos saudáveis por meio do registro 
+contínuo, da análise das informações e da visualização da evolução do usuário ao longo do tempo, oferecendo uma ferramenta confiável, organizada e de fácil utilização para o 
+gerenciamento da rotina de cuidados com a saúde.
+
+
