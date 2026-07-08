@@ -4,8 +4,8 @@ import { criarRegistroSaude, listarRegistrosSaude, buscarRegistroPorData, atuali
 const router = Router();
 
 router.post("/", criarRegistroSaude);
-router.get("/usuario/:usuarioId", listarRegistrosSaude);
-router.get("/usuario/:usuarioId/filtro", buscarRegistroPorData);
+router.get("/", listarRegistrosSaude);
+router.get("/filtro", buscarRegistroPorData);
 router.put("/:id", atualizarRegistroSaude);
 router.delete("/:id", excluirRegistroSaude);
 

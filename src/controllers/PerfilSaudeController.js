@@ -3,10 +3,11 @@ import { PerfilSaude } from "../models/PerfilSaude.js";
 // CREATE / UPDATE (Usa findOneAndUpdate com upsert para garantir um único perfil por utilizador)
 export const salvarPerfilSaude = async (req, res) => {
     try {
-        const { usuarioId, peso, altura, idade, metaAgua, metaExercicio } = req.body;
+        const usuarioId = req.usuarioId;
+        const { peso, altura, idade, metaAgua, metaExercicio } = req.body;
 
-        if (!usuarioId || !peso || !altura) {
-            return res.status(400).json({ erro: "usuarioId, peso e altura são obrigatórios." });
+        if (!peso || !altura) {
+            return res.status(400).json({ erro: "peso e altura são obrigatórios." });
         }
 
         // Instancia o modelo temporariamente para executar o método calcularIMC() do vosso esquema
@@ -25,10 +26,10 @@ export const salvarPerfilSaude = async (req, res) => {
     }
 };
 
-// READ - Obter o perfil do utilizador
+// READ - Obter o perfil do utilizador autenticado
 export const obterPerfilSaude = async (req, res) => {
     try {
-        const { usuarioId } = req.params;
+        const usuarioId = req.usuarioId;
         const perfil = await PerfilSaude.findOne({ usuario: usuarioId }).populate("usuario", "nome email");
         if (!perfil) {
             return res.status(404).json({ erro: "Perfil de saúde não encontrado." });
@@ -39,10 +40,10 @@ export const obterPerfilSaude = async (req, res) => {
     }
 };
 
-// DELETE - Remover perfil
+// DELETE - Remover perfil do utilizador autenticado
 export const deletarPerfilSaude = async (req, res) => {
     try {
-        const { usuarioId } = req.params;
+        const usuarioId = req.usuarioId;
         const removido = await PerfilSaude.findOneAndDelete({ usuario: usuarioId });
         if (!removido) {
             return res.status(404).json({ erro: "Perfil de saúde não encontrado." });

@@ -4,7 +4,7 @@ import { salvarPerfilSaude, obterPerfilSaude, deletarPerfilSaude } from "../cont
 const router = Router();
 
 router.post("/", salvarPerfilSaude);
-router.get("/usuario/:usuarioId", obterPerfilSaude);
-router.delete("/usuario/:usuarioId", deletarPerfilSaude);
+router.get("/", obterPerfilSaude);
+router.delete("/", deletarPerfilSaude);
 
 export { router as perfilSaudeRoutes };
