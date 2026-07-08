@@ -17,7 +17,7 @@ export const conectarBanco = async () => {
         }
 
         await mongoose.connect(URL);
-        console.log("Conexão com o MongoDB Atlas realizada com sucesso! 🚀");
+        console.log("Conexão com o MongoDB Atlas realizada com sucesso!");
     } catch (error) {
         console.error("Erro ao conectar ao banco de dados:", error.message);
         process.exit(1);
