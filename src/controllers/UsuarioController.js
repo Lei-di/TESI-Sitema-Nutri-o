@@ -55,7 +55,10 @@ export const atualizarUsuario = async (req, res) => {
         if (error.code === 11000) {
             return res.status(409).json({ erro: "Este e-mail já está cadastrado." });
         }
-        return res.status(400).json({ erro: error.message });
+        if (error.name === "ValidationError") {
+            return res.status(400).json({ erro: error.message });
+        }
+        return res.status(500).json({ erro: error.message });
     }
 };
 

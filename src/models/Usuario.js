@@ -3,7 +3,12 @@ import bcrypt from 'bcrypt';
 
 const usuarioSchema = new mongoose.Schema({
     nome: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Por favor, insira um e-mail válido.']
+    },
     telefone: { type: String, required: true },
     senha: { type: String, required: true }
 });
