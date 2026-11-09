@@ -5,7 +5,7 @@ import express from "express";
 import { conectarBanco } from "./config/db.js";
 import { usuarioRoutes } from "./routes/usuarioRoutes.js";
 import { authRoutes } from "./routes/authRoutes.js";
-import { saudeRoutes } from "./routes/saudeRoutes.js";
+import { saudeRoutes } from "./routes/SaudeRoutes.js";
 import { perfilSaudeRoutes } from "./routes/perfilSaudeRoutes.js";
 import { autenticarToken } from "./middlewares/authMiddleware.js";
 
@@ -13,6 +13,10 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+app.get("/health", (_req, res) => {
+    res.json({ status: "ok" });
+});
 
 app.use("/usuarios", usuarioRoutes);
 app.use("/auth", authRoutes);

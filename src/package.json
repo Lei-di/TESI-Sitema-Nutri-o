@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Sistema de Monitoramento de Saúde e Nutrição",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
