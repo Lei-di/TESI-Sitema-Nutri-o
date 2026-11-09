@@ -61,6 +61,33 @@ Servidor rodando com sucesso em http://localhost:3000
 O front-end fica em `frontend/`, separado do back-end Express em `src/`.
 Usa Next.js com App Router, React, JavaScript e ESLint.
 
+### Tela de cadastro
+
+Quem já tem conta pode usar **Já tenho conta** no cadastro ou **Entrar** na página inicial.
+Esses botões abrem `/login`, com e-mail e senha conectados a `POST /auth/login`.
+A entrada apresenta erros de credenciais e de indisponibilidade, permite mostrar a senha
+e bloqueia envios repetidos. Após a confirmação da API, a sessão (token e dados públicos
+do usuário, sem a senha) fica em `sessionStorage`, limitada à aba do navegador.
+Esta etapa confirma o acesso; o painel de acompanhamento ainda será implementado.
+
+Acesse **http://localhost:3001/cadastro**, ou clique em **Criar conta** na página inicial.
+O formulário envia nome, e-mail, telefone e senha para `POST /usuarios` por meio do proxy do Next.js.
+
+- Nome: obrigatório, com pelo menos 3 caracteres; aceita letras, acentos e espaços.
+- E-mail: obrigatório e com formato válido.
+- Telefone: obrigatório, com DDD e 10 ou 11 números. A máscara é apenas visual; a API recebe os números.
+- Senha: pelo menos 6 caracteres, com uma letra maiúscula, uma minúscula e um número, conforme as regras do back-end.
+
+A tela valida ao sair dos campos e ao enviar, mostra erros próximos aos campos e permite
+exibir ou ocultar a senha. Durante o envio, bloqueia novas submissões. E-mail duplicado,
+erros de validação da API e falhas de conexão recebem mensagens em português.
+A confirmação de sucesso só aparece depois que a API confirma o cadastro.
+O formulário mantém os dados apenas na memória da página e limpa a senha após o sucesso.
+Para gravar o cadastro, o Express e o MongoDB precisam estar em execução e configurados.
+
+Dentro de `frontend/`, execute `npm test` para verificar as regras de validação e o cliente
+da API. Os testes usam respostas simuladas e não gravam dados no banco.
+
 ### Configurar e executar
 
 1. Configure o `.env` da raiz com suas credenciais, usando `.env.example` como modelo.
