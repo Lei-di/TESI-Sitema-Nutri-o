@@ -1,4 +1,4 @@
-// Cliente para componentes do navegador. O Next.js encaminha para o Express.
+// Cliente para componentes do navegador.
 export class ApiError extends Error {
   constructor(message, status, errors = []) {
     super(message);
@@ -8,17 +8,29 @@ export class ApiError extends Error {
   }
 }
 
-const unavailableMessage = "O serviço está indisponível no momento. Tente novamente em instantes.";
+const unavailableMessage =
+  "O serviço está indisponível no momento. Tente novamente em instantes.";
 
-export async function apiRequest(path, { token, body, headers, ...options } = {}) {
+export async function apiRequest(
+  path,
+  { token, body, headers, ...options } = {}
+) {
   if (!path.startsWith("/") || path.startsWith("//")) {
     throw new Error("Use um caminho relativo da API, como /perfis.");
   }
+
   const requestHeaders = new Headers(headers);
-  if (body !== undefined) requestHeaders.set("Content-Type", "application/json");
-  if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
+
+  if (body !== undefined) {
+    requestHeaders.set("Content-Type", "application/json");
+  }
+
+  if (token) {
+    requestHeaders.set("Authorization", `Bearer ${token}`);
+  }
 
   let response;
+
   try {
     response = await fetch(`/api/backend${path}`, {
       ...options,
@@ -27,19 +39,33 @@ export async function apiRequest(path, { token, body, headers, ...options } = {}
       cache: "no-store",
     });
   } catch (error) {
-    if (error.name === "AbortError" || error.name === "TimeoutError") {
-      throw new ApiError("A solicitação demorou mais que o esperado. Tente novamente.", 0);
+    if (
+      error.name === "AbortError" ||
+      error.name === "TimeoutError"
+    ) {
+      throw new ApiError(
+        "A solicitação demorou mais que o esperado. Tente novamente.",
+        0
+      );
     }
-    throw new ApiError("Não foi possível conectar. Verifique sua conexão e tente novamente.", 0);
+
+    throw new ApiError(
+      "Não foi possível conectar. Verifique sua conexão e tente novamente.",
+      0
+    );
   }
 
   const text = await response.text();
   let data = null;
+
   try {
     data = text ? JSON.parse(text) : null;
   } catch {
     if (response.ok) {
-      throw new ApiError("O serviço retornou uma resposta inesperada. Tente novamente.", response.status);
+      throw new ApiError(
+        "O serviço retornou uma resposta inesperada.",
+        response.status
+      );
     }
   }
 
@@ -47,34 +73,87 @@ export async function apiRequest(path, { token, body, headers, ...options } = {}
     if (response.status >= 500) {
       throw new ApiError(unavailableMessage, response.status);
     }
+
     const errors = Array.isArray(data?.erros)
-      ? data.erros.filter((message) => typeof message === "string" && message.trim())
+      ? data.erros.filter(
+          (message) =>
+            typeof message === "string" && message.trim()
+        )
       : [];
+
     const message = errors.length
       ? errors.join(" ")
-      : [data?.erro, data?.mensagem].find((value) => typeof value === "string" && value.trim())
-        || "Não foi possível concluir a solicitação. Tente novamente.";
+      : [
+          data?.erro,
+          data?.mensagem,
+        ].find(
+          (value) =>
+            typeof value === "string" && value.trim()
+        ) || "Não foi possível concluir a solicitação.";
+
     throw new ApiError(message, response.status, errors);
   }
+
   return data;
 }
 
 export const usuarioApi = {
-  criar: (dados, { signal } = {}) => apiRequest("/usuarios", {
-    method: "POST",
-    body: dados,
-    signal,
-  }),
+  criar: (dados, { signal } = {}) =>
+    apiRequest("/usuarios", {
+      method: "POST",
+      body: dados,
+      signal,
+    }),
 };
 
 export const authApi = {
-  login: (email, senha, { signal } = {}) => apiRequest("/auth/login", { method: "POST", body: { email, senha }, signal }),
+  login: (email, senha, { signal } = {}) =>
+    apiRequest("/auth/login", {
+      method: "POST",
+      body: { email, senha },
+      signal,
+    }),
 };
 
 export const saudeApi = {
-  listar: (token) => apiRequest("/saude", { token }),
+  listar: (token) =>
+    apiRequest("/saude", { token }),
+
+  criar: (dados, token) =>
+    apiRequest("/saude", {
+      method: "POST",
+      body: dados,
+      token,
+    }),
+
+  atualizar: (id, dados, token) =>
+    apiRequest(`/saude/${id}`, {
+      method: "PUT",
+      body: dados,
+      token,
+    }),
+
+  excluir: (id, token) =>
+    apiRequest(`/saude/${id}`, {
+      method: "DELETE",
+      token,
+    }),
 };
 
 export const perfilApi = {
-  obter: (token) => apiRequest("/perfis", { token }),
+  obter: (token) =>
+    apiRequest("/perfis", { token }),
+
+  salvar: (dados, token) =>
+    apiRequest("/perfis", {
+      method: "POST",
+      body: dados,
+      token,
+    }),
+
+  excluir: (token) =>
+    apiRequest("/perfis", {
+      method: "DELETE",
+      token,
+    }),
 };
