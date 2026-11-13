@@ -1,3 +1,4 @@
+
 // Cliente para componentes do navegador.
 export class ApiError extends Error {
   constructor(message, status, errors = []) {
@@ -70,6 +71,27 @@ export async function apiRequest(
   }
 
   if (!response.ok) {
+    // Não redireciona durante o login, pois 401 significa
+    // que o e-mail ou a senha estão incorretos.
+    const requisicaoLogin = path === "/auth/login";
+
+    if (
+      typeof window !== "undefined" &&
+      !requisicaoLogin
+    ) {
+      if (response.status === 401) {
+        sessionStorage.removeItem("healthlog-session");
+
+        window.location.assign(
+          "/login?motivo=sessao-expirada"
+        );
+      }
+
+      if (response.status === 403) {
+        window.location.assign("/acesso-negado");
+      }
+    }
+
     if (response.status >= 500) {
       throw new ApiError(unavailableMessage, response.status);
     }

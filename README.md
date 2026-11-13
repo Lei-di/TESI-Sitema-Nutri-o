@@ -1,155 +1,216 @@
-# Sistema Nutrição
+# HealthLog — Sistema de Acompanhamento de Saúde
 
-Sistema para acompanhamento de saúde com metas de peso, alimentação e evolução.
+O HealthLog é um sistema web desenvolvido para auxiliar no acompanhamento de hábitos e cuidados com a saúde. A plataforma permite registrar o consumo de água, horas de sono e atividades físicas, configurar metas pessoais e acompanhar a evolução por meio de indicadores e relatórios.
 
+## Tecnologias utilizadas
 
-## Como instalar e rodar o projeto
+### Front-end
+- Next.js (App Router)
+- React
+- JavaScript
+- CSS Modules
 
-### 1. Pré-requisitos
+### Back-end
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JSON Web Token (JWT)
+- bcrypt
 
-- [Node.js](https://nodejs.org/) instalado (versão 20.9 ou superior; recomendado Node.js 24 LTS)
-- Uma conta no [MongoDB Atlas](https://www.mongodb.com/atlas) com um cluster criado (ou outra instância MongoDB acessível)
+## Funcionalidades
 
-### 2. Clonar o repositório
+### Autenticação e usuários
+- Cadastro de usuários com nome, e-mail, telefone e senha.
+- Login com validação de credenciais.
+- Persistência da sessão durante a navegação na aba.
+- Encerramento da sessão (logout).
+- Proteção de páginas que exigem autenticação.
+- Controle de acesso por perfil.
+
+### Perfis de acesso
+O sistema possui dois perfis:
+
+- **Usuário (`usuario`):** pode acessar seu perfil, configurar metas e gerenciar seus próprios registros de saúde.
+- **Administrador (`admin`):** possui acesso às operações administrativas disponibilizadas pelo sistema, incluindo a listagem de usuários.
+
+Os cadastros realizados pela tela pública recebem automaticamente o perfil de usuário.
+
+### Perfil e metas
+- Visualização e atualização de dados pessoais.
+- Registro de informações de saúde, como peso, altura e idade.
+- Configuração de metas de consumo de água e prática de exercícios.
+
+### Diário de saúde
+- Registro de consumo de água.
+- Registro de horas e qualidade do sono.
+- Registro de atividades físicas, duração e calorias.
+- Consulta ao histórico de registros.
+- Edição e exclusão de registros.
+- Filtros por data e tipo de registro.
+- Indicadores de acompanhamento dos hábitos.
+
+### Dashboard e relatórios
+- Painel com indicadores de acompanhamento.
+- Resumo dos registros de saúde.
+- Relatórios com visualização semanal e mensal.
+- Gráficos de consumo de água, horas de sono e atividades físicas.
+- Informações sobre duração dos exercícios e calorias gastas.
+
+### Feedback e navegação
+- Mensagens de sucesso e erro.
+- Indicadores de carregamento.
+- Mensagens para listas sem registros ou sem resultados nos filtros.
+- Página de acesso negado para operações sem permissão.
+
+## Estrutura do projeto
+
+```text
+TESI-Sitema-Nutri-o/
+│
+├── frontend/
+│   ├── app/
+│   │   ├── acesso-negado/
+│   │   ├── cadastro/
+│   │   ├── dashboard/
+│   │   ├── diario/
+│   │   ├── login/
+│   │   ├── perfil/
+│   │   └── relatorios/
+│   │
+│   ├── components/
+│   ├── lib/
+│   └── package.json
+│
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   ├── scripts/
+│   ├── index.js
+│   └── package.json
+│
+├── .env
+├── .gitignore
+└── README.md
+```
+
+## Pré-requisitos
+
+- Node.js 20.9 ou superior.
+- npm.
+- Conta no [MongoDB Atlas](https://www.mongodb.com/atlas) ou uma instância MongoDB acessível.
+- Git.
+
+## Como instalar e executar
+
+### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/Lei-di/TESI-Sitema-Nutri-o.git
 cd TESI-Sitema-Nutri-o
 ```
 
-### 3. Instalar as dependências
+### 2. Configurar o back-end
 
-As dependências ficam dentro da pasta `src`, então entre nela antes de instalar:
+Na raiz do projeto, crie um arquivo `.env` com as seguintes variáveis:
+
+```env
+MONGODB_URI=sua_string_de_conexao
+JWT_SECRET=sua_chave_secreta
+```
+
+Não compartilhe os valores reais dessas variáveis nem envie o arquivo `.env` ao GitHub.
+
+Instale as dependências do back-end:
 
 ```bash
 cd src
 npm install
 ```
 
-### 4. Configurar as variáveis de ambiente
+Inicie o servidor:
 
-Crie um arquivo `.env` **na raiz do projeto** com o seguinte conteúdo:
+```bash
+npm run dev
+```
+
+O servidor será executado em:
+
+`http://localhost:3000`
+
+### 3. Configurar o front-end
+
+Abra outro terminal e acesse a pasta do front-end:
+
+```bash
+cd frontend
+npm install
+```
+
+Configure o arquivo `frontend/.env.local`, utilizando o modelo `frontend/.env.example`, quando disponível.
+
+Exemplo de configuração:
 
 ```env
-MONGODB_URI=sua_string_de_conexao_do_mongodb_atlas
-JWT_SECRET=uma_chave_secreta_qualquer_para_assinar_os_tokens
+BACKEND_URL=http://127.0.0.1:3000
 ```
 
-- `MONGODB_URI`: a string de conexão do cluster no MongoDB Atlas (formato `mongodb+srv://usuario:senha@cluster.../nomeDoBanco`)
-- `JWT_SECRET`: qualquer texto secreto, usado para gerar e validar os tokens de login
-
-> O arquivo `.env` não deve ser enviado ao GitHub — ele já está listado no `.gitignore`.
-
-### 5. Iniciar o servidor
-
-Ainda dentro da pasta `src`:
+Inicie o front-end:
 
 ```bash
-node index.js
+npm run dev
 ```
 
-Se tudo estiver certo, vai aparecer no terminal:
+A aplicação estará disponível em:
 
-```
-Iniciando o Servidor de Nutrição...
-Conexão com o MongoDB Atlas realizada com sucesso!
-Servidor rodando com sucesso em http://localhost:3000
-```
+`http://localhost:3001`
 
-## Front-end Next.js
+**Importante:** mantenha os dois servidores em execução. O front-end depende do back-end para realizar operações com os dados e autenticação.
 
-O front-end fica em `frontend/`, separado do back-end Express em `src/`.
-Usa Next.js com App Router, React, JavaScript e ESLint.
+## Comunicação com a API
 
-### Tela de cadastro
+O back-end disponibiliza as seguintes rotas principais:
 
-Quem já tem conta pode usar **Já tenho conta** no cadastro ou **Entrar** na página inicial.
-Esses botões abrem `/login`, com e-mail e senha conectados a `POST /auth/login`.
-A entrada apresenta erros de credenciais e de indisponibilidade, permite mostrar a senha
-e bloqueia envios repetidos. Após a confirmação da API, a sessão (token e dados públicos
-do usuário, sem a senha) fica em `sessionStorage`, limitada à aba do navegador.
-Esta etapa confirma o acesso; o painel de acompanhamento ainda será implementado.
+| Rota | Método | Finalidade |
+|---|---|---|
+| `/health` | GET | Verificar disponibilidade do servidor |
+| `/usuarios` | POST | Cadastrar usuário |
+| `/usuarios` | GET | Listar usuários (administrador) |
+| `/usuarios/:id` | GET | Consultar usuário |
+| `/usuarios/:id` | PUT | Atualizar usuário |
+| `/usuarios/:id` | DELETE | Excluir usuário (administrador) |
+| `/auth/login` | POST | Realizar login |
+| `/saude` | GET | Listar registros de saúde |
+| `/saude` | POST | Criar registro de saúde |
+| `/saude/:id` | PUT | Atualizar registro |
+| `/saude/:id` | DELETE | Excluir registro |
+| `/perfis` | — | Operações relacionadas ao perfil de saúde |
 
-Acesse **http://localhost:3001/cadastro**, ou clique em **Criar conta** na página inicial.
-O formulário envia nome, e-mail, telefone e senha para `POST /usuarios` por meio do proxy do Next.js.
+As rotas protegidas utilizam autenticação por token JWT.
 
-- Nome: obrigatório, com pelo menos 3 caracteres; aceita letras, acentos e espaços.
-- E-mail: obrigatório e com formato válido.
-- Telefone: obrigatório, com DDD e 10 ou 11 números. A máscara é apenas visual; a API recebe os números.
-- Senha: pelo menos 6 caracteres, com uma letra maiúscula, uma minúscula e um número, conforme as regras do back-end.
+O Next.js encaminha as requisições do navegador ao Express por meio do proxy configurado no projeto.
 
-A tela valida ao sair dos campos e ao enviar, mostra erros próximos aos campos e permite
-exibir ou ocultar a senha. Durante o envio, bloqueia novas submissões. E-mail duplicado,
-erros de validação da API e falhas de conexão recebem mensagens em português.
-A confirmação de sucesso só aparece depois que a API confirma o cadastro.
-O formulário mantém os dados apenas na memória da página e limpa a senha após o sucesso.
-Para gravar o cadastro, o Express e o MongoDB precisam estar em execução e configurados.
+## Segurança e configuração
 
-Dentro de `frontend/`, execute `npm test` para verificar as regras de validação e o cliente
-da API. Os testes usam respostas simuladas e não gravam dados no banco.
+- Não publique arquivos `.env` ou `.env.local` com informações reais.
+- Não compartilhe chaves JWT, senhas ou strings de conexão.
+- Não coloque credenciais privadas em variáveis acessíveis pelo navegador.
+- Utilize dados fictícios para demonstrações e testes públicos.
 
-### Configurar e executar
+## Execução em ambiente de desenvolvimento
 
-1. Configure o `.env` da raiz com suas credenciais, usando `.env.example` como modelo.
-2. Em um terminal, inicie o back-end:
+O projeto utiliza dois servidores:
 
-   ```bash
-   cd src
-   npm ci
-   npm run dev
-   ```
+| Serviço | Porta |
+|---|---:|
+| Back-end Express | 3000 |
+| Front-end Next.js | 3001 |
 
-3. Em outro terminal, prepare o front-end:
+Para utilizar o sistema, inicie primeiro o back-end e depois o front-end, cada um em seu próprio terminal.
 
-   ```bash
-   cd frontend
-   npm ci
-   ```
+## Repositório
 
-4. Copie `frontend/.env.example` para `frontend/.env.local`. O endereço padrão
-   do back-end é `http://127.0.0.1:3000`. Inicie o front-end:
-
-   ```bash
-   npm run dev
-   ```
-
-5. Abra **http://localhost:3001**.
-
-O back-end só começa a escutar após conectar ao MongoDB. Sem o banco configurado,
-o front-end abre normalmente; os recursos que usam a API precisam do back-end em execução.
-
-### Comunicação com a API
-
-O navegador chama `/api/backend/*` na porta 3001. O Next.js encaminha essas
-requisições ao Express na porta 3000 por meio de `rewrites` em `next.config.mjs`.
-Isso mantém as chamadas na mesma origem do navegador, sem precisar adicionar CORS
-ao Express. `BACKEND_URL` é uma variável do servidor; reinicie o Next.js ao alterá-la.
-Não coloque credenciais do MongoDB ou `JWT_SECRET` no ambiente do front-end.
-
-O cliente reutilizável `frontend/lib/api.js` trata JSON, erros e tokens Bearer:
-
-```js
-import { authApi, perfilApi } from "@/lib/api";
-
-const sessao = await authApi.login(email, senha);
-const perfil = await perfilApi.obter(sessao.token);
-```
-
-Esse cliente é para componentes do navegador. O token deve ser passado explicitamente;
-esta etapa ainda não implementa telas de login nem persistência de sessão.
-As rotas existentes `/usuarios`, `/auth/login`, `/saude` e `/perfis` são preservadas.
-`GET /health` permite testar a conexão sem autenticação nem modificar dados.
-
-### Verificações e produção
-
-Dentro de `frontend/`:
-
-```bash
-npm run lint
-npm run build
-npm start
-```
-
-O servidor de produção abre na porta 3001 e também precisa do Express em execução.
-Configure `BACKEND_URL` antes de gerar a build de cada ambiente.
-
+[GitHub — TESI Sistema de Nutrição](https://github.com/Lei-di/TESI-Sitema-Nutri-o)

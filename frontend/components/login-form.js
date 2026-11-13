@@ -39,6 +39,18 @@ export default function LoginForm() {
   const erroGeral = useRef(null);
 
   useEffect(() => {
+    const parametros = new URLSearchParams(window.location.search);
+
+    if (parametros.get("motivo") === "sessao-expirada") {
+      setMensagem(
+        "Sua sessão expirou. Entre novamente para continuar."
+      );
+
+      window.history.replaceState({}, "", "/login");
+    }
+  }, []);
+
+  useEffect(() => {
     if (mensagem) erroGeral.current?.focus();
   }, [mensagem]);
 
