@@ -1,35 +1,52 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const usuarioSchema = new mongoose.Schema({
-    nome: { type: String, required: true },
-    email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Por favor, insira um e-mail válido.']
+    nome: {
+        type: String,
+        required: true,
+        trim: true
     },
-    telefone: { type: String, required: true },
-    senha: { type: String, required: true }
+
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        match: [
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            "Por favor, insira um e-mail válido."
+        ]
+    },
+
+    telefone: {
+        type: String,
+        required: true
+    },
+
+    senha: {
+        type: String,
+        required: true
+    },
+
+    perfil: {
+        type: String,
+        enum: ["usuario", "admin"],
+        default: "usuario",
+        required: true
+    }
 });
 
-usuarioSchema.pre('save', async function () {
-    const usuario = this;
-
-    if (!usuario.isModified('senha')) {
-        return; 
+usuarioSchema.pre("save", async function () {
+    if (!this.isModified("senha")) {
+        return;
     }
 
-    try {
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(usuario.senha, salt);
-
-        usuario.senha = hash;
-        
-    } catch (err) {
-        throw err;
-    }
+    const salt = await bcrypt.genSalt(10);
+    this.senha = await bcrypt.hash(this.senha, salt);
 });
 
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+const Usuario = mongoose.model("Usuario", usuarioSchema);
+
 export default Usuario;
