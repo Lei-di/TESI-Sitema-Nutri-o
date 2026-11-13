@@ -214,3 +214,20 @@ Para utilizar o sistema, inicie primeiro o back-end e depois o front-end, cada u
 ## Repositório
 
 [GitHub — TESI Sistema de Nutrição](https://github.com/Lei-di/TESI-Sitema-Nutri-o)
+
+## Credenciais para testes
+
+As contas abaixo são destinadas à validação das funcionalidades
+e dos níveis de permissão do sistema.
+
+### Administrador
+- E-mail: teste.atlas2026@email.com
+- Senha: [preencher com a senha da conta de teste]
+- Perfil: admin
+
+### Usuário
+- E-mail: gabriela.teste2026@email.com
+- Senha: [preencher com a senha da conta de teste]
+- Perfil: usuario
+
+As credenciais são destinadas exclusivamente ao ambiente de testes.
